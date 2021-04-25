@@ -12,7 +12,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.fairjungle.companion"
+        applicationId "com.axell.marvelcharacters"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCode
@@ -20,15 +20,19 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/metadata.kotlin_module'
+        exclude 'META-INF/metadata.jvm.kotlin_module'
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField ("String", "SERVER_URL", '"https://gateway.marvel.com/"')
+            buildConfigField("String", "SERVER_URL", '"https://gateway.marvel.com"')
         }
         debug {
-            buildConfigField ("String", "SERVER_URL", '"https://gateway.marvel.com/"')
+            buildConfigField("String", "SERVER_URL", '"https://gateway.marvel.com"')
         }
     }
     compileOptions {
@@ -42,6 +46,7 @@ android {
         jvmTarget = '1.8'
     }
     check.dependsOn ktlint
+
 }
 
 dependencies {
@@ -89,7 +94,7 @@ dependencies {
     //OkHttp
     // define a BOM and its version
     implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
 
     //Room
     implementation "androidx.room:room-runtime:$versions.room"
@@ -107,7 +112,7 @@ dependencies {
     testImplementation "junit:junit:$versions.junitTest"
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$versions.room"
-    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okHttp"
 
     //Instrumented test for androidTest package
     androidTestImplementation "androidx.test.ext:junit:$versions.junitAndroidTest"
