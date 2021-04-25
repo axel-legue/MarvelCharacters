@@ -1,6 +1,7 @@
 package com.axell.marvelcharacters.di
 
 import com.axell.marvelcharacters.BuildConfig
+import com.axell.marvelcharacters.data.network.MarvelService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,5 +45,10 @@ class NetworkModule {
             .client(httpClient)
             .addConverterFactory(moshiConverterFactory)
             .build()
+    }
+
+    @Provides
+    fun provideMarvelService(retrofit: Retrofit): MarvelService {
+        return retrofit.create(MarvelService::class.java)
     }
 }

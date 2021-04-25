@@ -7,6 +7,10 @@ plugins {
 
 apply from: '../ktlint.gradle'
 
+def apiKeyPropertiesFile = rootProject.file("apikey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -19,6 +23,8 @@ android {
         versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "PUBLIC_KEY", apiKeyProperties['PUBLIC_KEY'])
+        buildConfigField("String", "SECRET_KEY", apiKeyProperties['SECRET_KEY'])
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
