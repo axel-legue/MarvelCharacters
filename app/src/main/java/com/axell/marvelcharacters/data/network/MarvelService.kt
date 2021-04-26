@@ -11,5 +11,6 @@ interface MarvelService {
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
+        @Query("limit") limit: Int = 100,
     ): Response<CharacterDataWrapper>
 }
