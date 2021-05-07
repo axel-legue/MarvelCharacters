@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.axell.marvelcharacters.core.functional.Result
 import com.axell.marvelcharacters.data.model.Character
-import com.axell.marvelcharacters.data.network.Result
 import com.axell.marvelcharacters.repository.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package com.axell.marvelcharacters.ui
+package com.axell.marvelcharacters.core.platform
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData

@@ -1,4 +1,4 @@
-package com.axell.marvelcharacters.di
+package com.axell.marvelcharacters.core.di
 
 import com.axell.marvelcharacters.BuildConfig
 import com.axell.marvelcharacters.data.network.MarvelService

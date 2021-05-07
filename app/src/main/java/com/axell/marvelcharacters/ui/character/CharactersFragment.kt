@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.axell.marvelcharacters.R
+import com.axell.marvelcharacters.core.platform.BaseFragment
 import com.axell.marvelcharacters.data.model.Character
 import com.axell.marvelcharacters.databinding.FragmentCharactersBinding
-import com.axell.marvelcharacters.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

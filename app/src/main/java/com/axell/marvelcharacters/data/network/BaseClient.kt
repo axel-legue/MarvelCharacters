@@ -1,5 +1,6 @@
 package com.axell.marvelcharacters.data.network
 
+import com.axell.marvelcharacters.core.functional.Result
 import retrofit2.Response
 import timber.log.Timber
 

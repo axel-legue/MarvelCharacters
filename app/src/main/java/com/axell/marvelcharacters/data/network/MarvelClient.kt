@@ -1,6 +1,7 @@
 package com.axell.marvelcharacters.data.network
 
 import com.axell.marvelcharacters.BuildConfig
+import com.axell.marvelcharacters.core.functional.Result
 import com.axell.marvelcharacters.data.model.CharacterDataWrapper
 import timber.log.Timber
 import java.math.BigInteger
