@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/characters_fragment"
-        android:name="com.axell.marvelcharacters.ui.character.CharactersFragment"
+        android:name="com.axell.marvelcharacters.features.characters.ui.CharactersFragment"
         android:label="characters_fragment"
         tools:layout="@layout/fragment_characters" />
 

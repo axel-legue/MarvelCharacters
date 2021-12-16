@@ -1,14 +1,17 @@
-package com.axell.marvelcharacters.repository
+package com.axell.marvelcharacters.features.characters.repository
 
 import com.axell.marvelcharacters.BuildConfig
 import com.axell.marvelcharacters.core.exception.Failure
+import com.axell.marvelcharacters.core.exception.Failure.NetworkConnectionError
+import com.axell.marvelcharacters.core.exception.Failure.ServerError
 import com.axell.marvelcharacters.core.functional.Either
 import com.axell.marvelcharacters.core.functional.Either.Left
 import com.axell.marvelcharacters.core.functional.Either.Right
 import com.axell.marvelcharacters.core.platform.NetworkHandler
-import com.axell.marvelcharacters.data.model.CharacterDataContainer
-import com.axell.marvelcharacters.data.model.CharacterDataWrapper
-import com.axell.marvelcharacters.features.MarvelService
+import com.axell.marvelcharacters.features.characters.model.Character
+import com.axell.marvelcharacters.features.characters.entity.CharacterWrapperEntity
+import com.axell.marvelcharacters.features.characters.entity.DataEntity
+import com.axell.marvelcharacters.features.characters.service.CharacterService
 import retrofit2.Call
 import timber.log.Timber
 import java.math.BigInteger
@@ -16,13 +19,13 @@ import java.security.MessageDigest
 import javax.inject.Inject
 
 interface CharacterRepository {
-    fun characters(): Either<Failure, CharacterDataContainer>
+    fun characters(): Either<Failure, List<Character>>
 
     class Network @Inject constructor(
         private val networkHandler: NetworkHandler,
-        private val service: MarvelService
+        private val service: CharacterService
     ) : CharacterRepository {
-        override fun characters(): Either<Failure, CharacterDataContainer> {
+        override fun characters(): Either<Failure, List<Character>> {
             // TODO : Move static params
             Timber.d("getCharacters")
             val ts = (System.currentTimeMillis() / 1000).toString()
@@ -33,10 +36,17 @@ interface CharacterRepository {
             return when (networkHandler.isNetworkAvailable()) {
                 true -> request(
                     service.getCharacters(ts = ts, apikey = apiKey, hash = hash),
-                    { it.characterDataContainer },
-                    CharacterDataWrapper()
+                    {
+                        it.data.results.map { characterEntity ->
+                            Timber.d("characterEntity $characterEntity")
+                            characterEntity.toCharacter()
+                        }
+                    },
+                    CharacterWrapperEntity("", "", "", "", DataEntity("", "", "", emptyList(), ""), "", "")
                 )
-                false -> Left(Failure.NetworkConnectionError)
+                false -> {
+                    Left(NetworkConnectionError)
+                }
             }
         }
 
@@ -48,12 +58,16 @@ interface CharacterRepository {
         ): Either<Failure, R> {
             return try {
                 val response = call.execute()
+
                 when (response.isSuccessful) {
-                    true -> Right(transform((response.body() ?: default)))
-                    false -> Left(Failure.ServerError)
+                    true -> {
+                        val test = response.body().toString()
+                        Right(transform((response.body() ?: default)))
+                    }
+                    false -> Left(ServerError)
                 }
             } catch (exception: Throwable) {
-                Left(Failure.ServerError)
+                Left(ServerError)
             }
         }
 

@@ -1,4 +1,4 @@
-package com.axell.marvelcharacters.ui
+package com.axell.marvelcharacters
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

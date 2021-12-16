@@ -1,4 +1,4 @@
-package com.axell.marvelcharacters.ui.character
+package com.axell.marvelcharacters.features.characters.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.axell.marvelcharacters.R
 import com.axell.marvelcharacters.core.platform.BaseFragment
-import com.axell.marvelcharacters.data.model.Character
 import com.axell.marvelcharacters.databinding.FragmentCharactersBinding
+import com.axell.marvelcharacters.features.characters.modelview.CharacterView
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -20,10 +20,10 @@ import timber.log.Timber
 class CharactersFragment : BaseFragment(R.layout.fragment_characters) {
 
     private var _binding: FragmentCharactersBinding? = null
-    private val charactersViewModel: CharactersViewModel by viewModels()
+    private val charactersViewModel by viewModels<CharactersViewModel>()
     private lateinit var adapter: CharacterAdapter
     private lateinit var characterListener: CharacterAdapter.CharacterListener
-    private val characters = mutableListOf<Character>()
+    private val characters = mutableListOf<CharacterView>()
 
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -37,7 +37,7 @@ class CharactersFragment : BaseFragment(R.layout.fragment_characters) {
 
     override fun onBind() {
         characterListener = object : CharacterAdapter.CharacterListener {
-            override fun characterSelected(character: Character) {
+            override fun characterSelected(character: CharacterView) {
                 Timber.d("characterSelected: $character")
                 Toast.makeText(requireContext(), character.toString(), Toast.LENGTH_LONG).show()
             }
@@ -62,7 +62,7 @@ class CharactersFragment : BaseFragment(R.layout.fragment_characters) {
     }
 
     private fun initViewModel() {
-        charactersViewModel.getCharacters()
+        charactersViewModel.loadCharacters()
         charactersViewModel.characters().observe {
             characters.clear()
             characters.addAll(it)
